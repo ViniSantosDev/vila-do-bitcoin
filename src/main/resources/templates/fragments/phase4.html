@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="content(player)">
+<div class="card">
+    <div class="phase-title">₿ Fase 4 — Você Descobriu o Bitcoin!</div>
+    <p class="phase-story">
+        Bitcoin é uma moeda diferente de tudo que você viu:
+        <strong>sem rei</strong> para criar mais,
+        <strong>sem banco</strong> para guardar,
+        limitada a <strong>21 milhões</strong> para sempre,
+        e controlada por <strong>você mesmo</strong>!
+    </p>
+
+    <div class="stats-row">
+        <div class="stat-pill">Seu Bitcoin: <strong th:text="${player.bitcoins} + ' ₿'" id="btc-count">0 ₿</strong></div>
+        <div class="stat-pill">Limite total: <strong>21.000.000 ₿</strong></div>
+        <div class="stat-pill" style="color:#085041; background:#E1F5EE; border-color:#5DCAA5">
+            Banco necessário: <strong>Nenhum! ✓</strong>
+        </div>
+    </div>
+
+    <div style="font-size:13px; color:#6b6963; margin-bottom:4px;">Registro de toda a vila (blockchain):</div>
+    <div class="ledger" id="ledger">
+        <div class="ledger-row" style="color:#b0ada8;">Nenhuma transação ainda...</div>
+    </div>
+
+    <div id="mine-area">
+        <div th:if="${!player.miningComplete}">
+            <div style="font-size:13px; color:#6b6963; margin-bottom:4px;">
+                Minerando bloco... <span id="mine-pct">0%</span>
+            </div>
+            <div class="mine-track">
+                <div class="mine-fill" id="mine-bar" style="width:0%"></div>
+            </div>
+            <div class="btn-row">
+                <button id="mine-btn" class="btn btn-primary"
+                        th:attr="hx-post=@{/game/{id}/mine(id=${player.id})}"
+                        hx-target="#mine-area"
+                        hx-swap="innerHTML"
+                        onclick="animateMine(this)">
+                    ⛏️ Minerar meu primeiro Bitcoin!
+                </button>
+            </div>
+        </div>
+        <div th:if="${player.miningComplete}" th:replace="~{fragments/phase4 :: mined(${player})}"></div>
+    </div>
+</div>
+
+<script>
+function animateMine(btn) {
+    btn.disabled = true;
+    btn.textContent = '⛏️ Minerando...';
+    let p = 0;
+    const bar = document.getElementById('mine-bar');
+    const pct = document.getElementById('mine-pct');
+    const iv = setInterval(() => {
+        p += Math.random() * 12 + 3;
+        if (p >= 100) { p = 100; clearInterval(iv); }
+        if (bar) bar.style.width = p + '%';
+        if (pct) pct.textContent = Math.round(p) + '%';
+    }, 120);
+}
+</script>
+</th:block>
+
+<th:block th:fragment="mined(player)">
+    <div class="victory">🎉🪙✨</div>
+    <div class="alert alert-success">
+        🎉 Parabéns! Você minerou <strong>1 ₿</strong>! Esse Bitcoin é <strong>seu</strong>,
+        sem banco, sem rei, sem fronteiras. Você pode enviar para qualquer pessoa no mundo em segundos!
+    </div>
+    <div class="btn-row">
+        <button class="btn btn-primary"
+                th:attr="hx-post=@{/game/{id}/send(id=${player.id})}"
+                hx-target="#game-area"
+                hx-swap="innerHTML">
+            📤 Enviar 0.5 ₿ para Ana
+        </button>
+    </div>
+</th:block>
+
+<th:block th:fragment="mine-result(result, player)">
+    <div th:replace="~{fragments/phase4 :: mined(${player})}"></div>
+</th:block>
+
+<th:block th:fragment="send-result(player)">
+<div class="card">
+    <div class="victory">🌍🎓₿</div>
+    <div class="phase-title" style="text-align:center; margin-bottom:1rem;">
+        Você completou a aventura!
+    </div>
+
+    <div class="alert alert-success" style="margin-bottom:1rem;">
+        ✅ Você enviou Bitcoin para Ana <strong>sem banco, sem taxas altas, sem fronteiras</strong>!
+        Ela recebeu em segundos, do outro lado do mundo.
+    </div>
+
+    <div class="card" style="background:#f5f3ef; border:none;">
+        <p style="font-size:14px; font-weight:600; margin-bottom:.75rem;">📚 O que você aprendeu hoje:</p>
+        <ul style="font-size:14px; color:#4a4845; line-height:1.8; padding-left:1.25rem;">
+            <li>Troca direta (escambo) é difícil porque nem sempre as pessoas querem o que você tem</li>
+            <li>Ouro e dinheiro de papel podem ser inflacionados por quem tem poder</li>
+            <li>Bancos podem falir, bloquear ou perder seu dinheiro</li>
+            <li>Bitcoin resolve os 3 problemas: limitado, sem banco, controlado por você</li>
+        </ul>
+    </div>
+
+    <div class="btn-row" style="margin-top:1rem;">
+        <a href="/" class="btn btn-primary">🚀 Jogar de novo</a>
+    </div>
+</div>
+</th:block>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="content">
+    <div th:replace="~{fragments/phase2 :: result(${result}, ${player})}"></div>
+</th:block>
+</body>
+</html>

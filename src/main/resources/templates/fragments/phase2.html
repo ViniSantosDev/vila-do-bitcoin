@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="content(player, breadPrice, totalGold)">
+<div class="card">
+    <div class="phase-title">👑 Fase 2 — O Ouro e o Rei</div>
+    <p class="phase-story">
+        A vila resolveu usar ouro como moeda. Funciona bem! Mas tem um problema:
+        o <strong>Rei da Vila</strong> pode criar ouro do nada a hora que quiser...
+    </p>
+
+    <div class="stats-row" id="inflation-stats">
+        <div class="stat-pill">Seu ouro: <strong>10 moedas</strong></div>
+        <div class="stat-pill">Total na vila: <strong th:text="${totalGold} + ' moedas'">100 moedas</strong></div>
+        <div class="stat-pill">Pão custa: <strong th:text="${breadPrice} + ' moeda(s)'">1 moeda</strong></div>
+    </div>
+
+    <div id="mint-result-area"></div>
+
+    <div class="btn-row">
+        <button class="btn btn-warn"
+                th:attr="hx-post=@{/game/{id}/mint(id=${player.id})}"
+                hx-target="#mint-result-area"
+                hx-swap="innerHTML">
+            👑 Rei cria +50 moedas de ouro
+        </button>
+    </div>
+</div>
+</th:block>
+
+<th:block th:fragment="result(result, player)">
+    <div th:if="${result}" class="alert alert-warn" th:text="${result.message}"></div>
+
+    <div th:if="${result}" class="stats-row">
+        <div class="stat-pill">Total na vila: <strong th:text="${result.totalGold} + ' moedas'"></strong></div>
+        <div class="stat-pill">Pão custa: <strong th:text="${result.breadPrice} + ' moeda(s)'"></strong></div>
+    </div>
+
+    <div th:if="${result and result.showNextButton}" class="alert alert-success" style="margin-top:.5rem">
+        💡 Entendeu o problema? Quando alguém pode criar dinheiro infinito, o seu dinheiro perde o valor! Isso se chama <strong>inflação</strong>.
+    </div>
+
+    <div th:if="${result and result.showNextButton}" class="btn-row" style="margin-top:.5rem">
+        <button class="btn btn-primary"
+                th:attr="hx-post=@{/game/{id}/advance/3(id=${player.id})}"
+                hx-target="#game-area"
+                hx-swap="innerHTML">
+            Descobrir o banco! →
+        </button>
+    </div>
+</th:block>
+
+</body>
+</html>

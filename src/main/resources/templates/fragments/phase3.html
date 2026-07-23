@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th:block th:fragment="content(player)">
+<div class="card">
+    <div class="phase-title">🏦 Fase 3 — O Banco Quebrou!</div>
+    <p class="phase-story">
+        A vila criou um banco para guardar o ouro de todo mundo. Parecia uma boa ideia...
+        até hoje de manhã.
+    </p>
+
+    <div class="big-emoji">🏦💥😱</div>
+
+    <div class="alert alert-danger">
+        😭 Você tinha <strong>50 moedas de ouro</strong> no banco. O banco faliu e fechou as portas.
+        Você perdeu <strong>tudo</strong>. Você confiou no banco, e ele te traiu.
+    </div>
+
+    <div class="alert alert-warn">
+        ⚠️ Outros problemas do banco: ele pode <strong>bloquear</strong> sua conta,
+        <strong>cobrar taxas</strong>, não funcionar em fins de semana,
+        ou simplesmente negar uma transferência.
+    </div>
+
+    <div class="alert alert-success">
+        💡 E se existisse um dinheiro que <strong>ninguém</strong> pudesse criar do nada
+        e que <strong>você mesmo</strong> controlasse, sem precisar de banco?
+    </div>
+
+    <div class="btn-row">
+        <button class="btn btn-primary"
+                th:attr="hx-post=@{/game/{id}/advance/4(id=${player.id})}"
+                hx-target="#game-area"
+                hx-swap="innerHTML">
+            Descobrir o Bitcoin! →
+        </button>
+    </div>
+</div>
+</th:block>
+
+</body>
+</html>

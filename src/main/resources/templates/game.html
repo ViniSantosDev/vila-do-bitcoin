@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Vila do Bitcoin</title>
+    <link rel="stylesheet" href="/css/game.css"/>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+<body>
+<div class="container">
+
+    <div class="game-header">
+        <div>🏘️ <strong>Vila do Bitcoin</strong></div>
+        <div class="game-header h2">Olá, <span th:text="${player.name}">Jogador</span>! 👋</div>
+    </div>
+
+    <!-- Barra de progresso -->
+    <div class="phase-bar">
+        <div th:class="'phase-dot' + (${player.currentPhase} >= 1 ? ' active' : '')"></div>
+        <div th:class="'phase-dot' + (${player.currentPhase} >= 2 ? ' active' : '') + (${player.currentPhase} > 2 ? ' done' : '')"></div>
+        <div th:class="'phase-dot' + (${player.currentPhase} >= 3 ? ' active' : '') + (${player.currentPhase} > 3 ? ' done' : '')"></div>
+        <div th:class="'phase-dot' + (${player.currentPhase} >= 4 ? ' active' : '')"></div>
+    </div>
+
+    <!-- Área do jogo (trocada pelo HTMX) -->
+    <div id="game-area">
+        <div th:switch="${player.currentPhase}">
+            <div th:case="1"  th:replace="~{fragments/phase1 :: content(${player})}"></div>
+            <div th:case="2"  th:replace="~{fragments/phase2 :: content(${player}, ${breadPrice}, ${totalGold})}"></div>
+            <div th:case="3"  th:replace="~{fragments/phase3 :: content(${player})}"></div>
+            <div th:case="4"  th:replace="~{fragments/phase4 :: content(${player})}"></div>
+        </div>
+    </div>
+
+    <!-- Reiniciar -->
+    <div style="text-align:center; margin-top:2rem;">
+        <form th:action="@{/game/{id}/reset(id=${player.id})}" method="post">
+            <button type="submit" class="btn" style="font-size:12px; color:#999;">
+                🔄 Reiniciar jogo
+            </button>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
