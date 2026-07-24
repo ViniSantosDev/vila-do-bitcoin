@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Vila do Bitcoin</title>
+    <link rel="stylesheet" href="/css/game.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="home-card">
+        <h1 th:text="${title}">😅 Ops!</h1>
+        <p th:text="${message}">Algo deu errado.</p>
+        <a href="/" class="btn btn-primary btn-full">🏠 Voltar ao início</a>
+    </div>
+</div>
+</body>
+</html>

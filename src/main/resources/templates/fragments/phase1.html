@@ -3,83 +3,98 @@
 <body>
 
 <th:block th:fragment="content(player)">
-<div class="card">
-    <div class="phase-title">🍎 Fase 1 — A Vila do Escambo</div>
-    <p class="phase-story">
-        Você tem uma maçã. A Ana tem pão. O Pedro tem leite. O pescador tem peixe.
-        Para comer, vocês precisam trocar diretamente! Mas será que isso funciona?
-    </p>
+    <div class="card">
+        <div class="phase-bar" >
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 1 ? ' active' : '')"></div>
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 2 ? ' active' : '') + (${player.currentPhase} > 2 ? ' done' : '')"></div>
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 3 ? ' active' : '') + (${player.currentPhase} > 3 ? ' done' : '')"></div>
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 4 ? ' active' : '')"></div>
+        </div>
+        <div class="phase-title">🍎 Fase 1 — A Vila do Escambo</div>
+        <p class="phase-story">
+            Você tem uma maçã. A Ana tem pão. O Pedro tem leite. O pescador tem peixe.
+            Para comer, vocês precisam trocar diretamente! Mas será que isso funciona?
+        </p>
 
-    <p style="font-size:13px; color:#6b6963; margin-bottom:.75rem;">
-        Escolha dois itens para tentar trocar:
-    </p>
+        <p style="font-size:13px; color:#6b6963; margin-bottom:.75rem;">
+            Escolha dois itens para tentar trocar:
+        </p>
 
+        <div id="barter-area">
+            <div class="items-grid">
+                <button class="item-btn"
+                        th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
+                        hx-vals='{"item1":"apple","item2":"bread"}'
+                        hx-target="#barter-area"
+                        hx-swap="innerHTML">
+                    <span style="font-size:20px;">🍎 → 🍞</span>
+                    <span>Maçã → Pão</span>
+                </button>
+                <button class="item-btn"
+                        th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
+                        hx-vals='{"item1":"apple","item2":"milk"}'
+                        hx-target="#barter-area"
+                        hx-swap="innerHTML">
+                    <span style="font-size:20px;">🍎 → 🥛</span>
+                    <span>Maçã → Leite</span>
+                </button>
+                <button class="item-btn"
+                        th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
+                        hx-vals='{"item1":"bread","item2":"milk"}'
+                        hx-target="#barter-area"
+                        hx-swap="innerHTML">
+                    <span style="font-size:20px;">🍞 → 🥛</span>
+                    <span>Pão → Leite</span>
+                </button>
+                <button class="item-btn"
+                        th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
+                        hx-vals='{"item1":"bread","item2":"fish"}'
+                        hx-target="#barter-area"
+                        hx-swap="innerHTML">
+                    <span style="font-size:20px;">🍞 → 🐟</span>
+                    <span>Pão → Peixe</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="result(result, player)">
     <div id="barter-area">
         <div class="items-grid">
             <button class="item-btn"
-                    hx-post="/game/{id}/barter"
                     th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
                     hx-vals='{"item1":"apple","item2":"bread"}'
                     hx-target="#barter-area"
                     hx-swap="innerHTML">
-                🍎 <span>Maçã → Pão</span>
+                <span style="font-size:20px;">🍎 → 🍞</span>
+                <span>Maçã → Pão</span>
             </button>
             <button class="item-btn"
                     th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
                     hx-vals='{"item1":"apple","item2":"milk"}'
                     hx-target="#barter-area"
                     hx-swap="innerHTML">
-                🍎 <span>Maçã → Leite</span>
+                <span style="font-size:20px;">🍎 → 🥛</span>
+                <span>Maçã → Leite</span>
             </button>
             <button class="item-btn"
                     th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
                     hx-vals='{"item1":"bread","item2":"milk"}'
                     hx-target="#barter-area"
                     hx-swap="innerHTML">
-                🍞 <span>Pão → Leite</span>
+                <span style="font-size:20px;">🍞 → 🥛</span>
+                <span>Pão → Leite</span>
             </button>
             <button class="item-btn"
                     th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
                     hx-vals='{"item1":"bread","item2":"fish"}'
                     hx-target="#barter-area"
                     hx-swap="innerHTML">
-                🍞 <span>Pão → Peixe</span>
+                <span style="font-size:20px;">🍞 → 🐟</span>
+                <span>Pão → Peixe</span>
             </button>
         </div>
-    </div>
-</div>
-</th:block>
-
-<th:block th:fragment="result(result, player)">
-    <div class="items-grid">
-        <button class="item-btn"
-                th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
-                hx-vals='{"item1":"apple","item2":"bread"}'
-                hx-target="#barter-area"
-                hx-swap="innerHTML">
-            🍎 <span>Maçã → Pão</span>
-        </button>
-        <button class="item-btn"
-                th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
-                hx-vals='{"item1":"apple","item2":"milk"}'
-                hx-target="#barter-area"
-                hx-swap="innerHTML">
-            🍎 <span>Maçã → Leite</span>
-        </button>
-        <button class="item-btn"
-                th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
-                hx-vals='{"item1":"bread","item2":"milk"}'
-                hx-target="#barter-area"
-                hx-swap="innerHTML">
-            🍞 <span>Pão → Leite</span>
-        </button>
-        <button class="item-btn"
-                th:attr="hx-post=@{/game/{id}/barter(id=${player.id})}"
-                hx-vals='{"item1":"bread","item2":"fish"}'
-                hx-target="#barter-area"
-                hx-swap="innerHTML">
-            🍞 <span>Pão → Peixe</span>
-        </button>
     </div>
 
     <div th:if="${result}" class="alert alert-danger" th:text="${result.message}"></div>
@@ -88,7 +103,7 @@
         💡 Viu? Troca direta não funciona direito! Precisamos de algo que <strong>todo mundo aceite</strong>. Vamos descobrir o ouro!
     </div>
 
-    <div th:if="${result?.showNextButton != null and result?.showNextButton}" class="btn-row">
+    <div th:if="${result?.showNextButton != null and result?.showNextButton}" class="btn-row"  style="justify-content:center;">
         <button class="btn btn-primary"
                 th:attr="hx-post=@{/game/{id}/advance/2(id=${player.id})}"
                 hx-target="#game-area"

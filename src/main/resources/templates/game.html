@@ -12,18 +12,10 @@
 
     <div class="game-header">
         <div>🏘️ <strong>Vila do Bitcoin</strong></div>
-        <div class="game-header h2">Olá, <span th:text="${player.name}">Jogador</span>! 👋</div>
+        <div class="game-header h2">Olá, <span th:text=" ${player.name}"> Jogador</span>! 👋</div>
     </div>
 
-    <!-- Barra de progresso -->
-    <div class="phase-bar">
-        <div th:class="'phase-dot' + (${player.currentPhase} >= 1 ? ' active' : '')"></div>
-        <div th:class="'phase-dot' + (${player.currentPhase} >= 2 ? ' active' : '') + (${player.currentPhase} > 2 ? ' done' : '')"></div>
-        <div th:class="'phase-dot' + (${player.currentPhase} >= 3 ? ' active' : '') + (${player.currentPhase} > 3 ? ' done' : '')"></div>
-        <div th:class="'phase-dot' + (${player.currentPhase} >= 4 ? ' active' : '')"></div>
-    </div>
-
-    <!-- Área do jogo (trocada pelo HTMX) -->
+    <!-- Área do jogo-->
     <div id="game-area">
         <div th:switch="${player.currentPhase}">
             <div th:case="1"><div th:replace="~{fragments/phase1 :: content(${player})}"></div></div>

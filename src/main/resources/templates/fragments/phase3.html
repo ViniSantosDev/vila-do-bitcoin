@@ -3,40 +3,46 @@
 <body>
 
 <th:block th:fragment="content(player)">
-<div class="card">
-    <div class="phase-title">🏦 Fase 3 — O Banco Quebrou!</div>
-    <p class="phase-story">
-        A vila criou um banco para guardar o ouro de todo mundo. Parecia uma boa ideia...
-        até hoje de manhã.
-    </p>
+    <div class="card">
+        <div class="phase-bar">
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 1 ? ' active' : '')"></div>
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 2 ? ' active' : '') + (${player.currentPhase} > 2 ? ' done' : '')"></div>
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 3 ? ' active' : '') + (${player.currentPhase} > 3 ? ' done' : '')"></div>
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 4 ? ' active' : '')"></div>
+        </div>
+        <div class="phase-title">🏦 Fase 3 — O Banco Quebrou!</div>
+        <p class="phase-story">
+            A vila criou um banco para guardar o ouro de todo mundo. Parecia uma boa ideia...
+            até hoje de manhã.
+        </p>
 
-    <div class="big-emoji">🏦💥😱</div>
+        <div class="big-emoji">🏦💥😱</div>
 
-    <div class="alert alert-danger">
-        😭 Você tinha <strong th:text="${player.goldCoins} + ' moedas de ouro'"></strong> no banco. O banco faliu e fechou as portas.
-        Você perdeu <strong>tudo</strong>. Você confiou no banco, e ele te traiu.
+        <div class="alert alert-danger">
+            😭 Você tinha <strong th:text="${player.goldCoins} + ' moedas de ouro'"></strong> no banco. O banco faliu e fechou as portas.
+            Você perdeu <strong>tudo</strong>. Você confiou no banco, e ele te traiu.
+        </div>
+
+        <div class="alert alert-warn">
+            ⚠️ Outros problemas do banco: ele pode <strong>bloquear</strong> sua conta,
+            <strong>cobrar taxas</strong>, limitar quanto você pode sacar por dia,
+            ou simplesmente negar uma transferência.
+        </div>
+
+        <div class="alert alert-success">
+            💡 E se existisse um dinheiro que <strong>ninguém</strong> pudesse criar do nada
+            e que <strong>você mesmo</strong> controlasse, sem precisar de banco?
+        </div>
+
+        <div class="btn-row" style="justify-content:center;">
+            <button class="btn btn-primary"
+                    th:attr="hx-post=@{/game/{id}/advance/4(id=${player.id})}"
+                    hx-target="#game-area"
+                    hx-swap="innerHTML">
+                Descobrir o Bitcoin! →
+            </button>
+        </div>
     </div>
-
-    <div class="alert alert-warn">
-        ⚠️ Outros problemas do banco: ele pode <strong>bloquear</strong> sua conta,
-        <strong>cobrar taxas</strong>, não funcionar em fins de semana,
-        ou simplesmente negar uma transferência.
-    </div>
-
-    <div class="alert alert-success">
-        💡 E se existisse um dinheiro que <strong>ninguém</strong> pudesse criar do nada
-        e que <strong>você mesmo</strong> controlasse, sem precisar de banco?
-    </div>
-
-    <div class="btn-row">
-        <button class="btn btn-primary"
-                th:attr="hx-post=@{/game/{id}/advance/4(id=${player.id})}"
-                hx-target="#game-area"
-                hx-swap="innerHTML">
-            Descobrir o Bitcoin! →
-        </button>
-    </div>
-</div>
 </th:block>
 
 </body>

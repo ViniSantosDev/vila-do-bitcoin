@@ -4,6 +4,12 @@
 
 <th:block th:fragment="content(player)">
     <div class="card">
+        <div class="phase-bar">
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 1 ? ' active' : '')"></div>
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 2 ? ' active' : '') + (${player.currentPhase} > 2 ? ' done' : '')"></div>
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 3 ? ' active' : '') + (${player.currentPhase} > 3 ? ' done' : '')"></div>
+            <div th:class="'phase-dot' + (${player.currentPhase} >= 4 ? ' active' : '')"></div>
+        </div>
         <div class="phase-title">₿ Fase 4 — Você Descobriu o Bitcoin!</div>
         <p class="phase-story">
             Bitcoin é uma moeda diferente de tudo que você viu:
@@ -42,7 +48,7 @@
                 <div class="mine-track">
                     <div class="mine-fill" id="mine-bar" style="width:0%"></div>
                 </div>
-                <div class="btn-row">
+                <div class="btn-row" style="justify-content:center;">
                     <button id="mine-btn" class="btn btn-primary"
                             th:attr="hx-post=@{/game/{id}/mine(id=${player.id})}"
                             hx-target="#game-area"
@@ -57,7 +63,6 @@
             </div>
         </div>
     </div>
-
     <script>
         function animateMine(btn) {
             btn.disabled = true;
@@ -82,13 +87,13 @@
         Esse Bitcoin é <strong>seu</strong>, sem banco, sem rei, sem fronteiras.
     </div>
     <div class="btn-row">
-        <button class="btn btn-warn"
+        <button class="btn btn-warn" style="flex:1; justify-content:center;"
                 th:attr="hx-post=@{/game/{id}/mine(id=${player.id})}"
                 hx-target="#game-area"
                 hx-swap="innerHTML">
             ⛏️ Minerar mais 1 ₿
         </button>
-        <button class="btn btn-primary"
+        <button class="btn btn-primary" style="flex:1; justify-content:center;"
                 th:attr="hx-post=@{/game/{id}/send(id=${player.id})}"
                 hx-target="#game-area"
                 hx-swap="innerHTML">
@@ -123,7 +128,7 @@
             </ul>
         </div>
 
-        <div class="btn-row" style="margin-top:1rem;">
+        <div class="btn-row" style="justify-content:center;">
             <a href="/" class="btn btn-primary">🚀 Jogar de novo</a>
         </div>
     </div>

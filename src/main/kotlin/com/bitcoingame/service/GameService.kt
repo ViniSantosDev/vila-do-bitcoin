@@ -1,5 +1,6 @@
 package com.bitcoingame.service
 
+import com.bitcoingame.exception.PlayerNotFoundException
 import com.bitcoingame.model.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,7 +15,7 @@ class GameService(private val playerRepository: PlayerRepository) {
     }
 
     fun getPlayer(id: Long): Player =
-        playerRepository.findById(id).orElseThrow { RuntimeException("Jogador não encontrado") }
+        playerRepository.findById(id).orElseThrow { PlayerNotFoundException(id) }
 
     fun attemptBarter(playerId: Long, item1: String, item2: String): TradeResult {
         val player = getPlayer(playerId)
