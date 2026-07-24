@@ -1,13 +1,14 @@
 package com.bitcoingame.controller
 
 import com.bitcoingame.service.GameService
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @Controller
-class GameController(private val gameService: GameService) {
+class GameController(private val gameService: GameService, @Value("\${app.lightning-address}") private val lightningAddress: String) {
 
 
     @GetMapping("/")
@@ -103,6 +104,7 @@ class GameController(private val gameService: GameService) {
     fun send(@PathVariable id: UUID, model: Model): String {
         val player = gameService.sendBitcoin(id)
         model.addAttribute("player", player)
+        model.addAttribute("lightningAddress", lightningAddress)
         return "fragments/phase4 :: send-result"
     }
 

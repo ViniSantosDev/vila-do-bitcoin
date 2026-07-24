@@ -128,10 +128,34 @@
             </ul>
         </div>
 
-        <div class="btn-row" style="justify-content:center;">
+        <div style="text-align:center; margin-top:1.5rem; padding-top:1.5rem; border-top:0.5px solid #e0ddd5;">
+            <p style="font-size:14px; color:#6b6963; margin-bottom:.75rem;">
+                ⚡ Gostou do jogo? Manda uns sats pela Lightning!
+            </p>
+
+            <img src="/qrcode/lightning"
+                 alt="QR Code Lightning"
+                 style="border-radius:8px; margin-bottom:.5rem;"/>
+            <div style="font-size:13px; color:#4a4845; margin-bottom:.5rem;" th:text="${lightningAddress}">
+                tactualreason158@walletofsatoshi.com
+            </div>
+            <button class="btn" style="font-size:12px;" onclick="copyLightningAddress()">
+                📋 Copiar endereço
+            </button>
+        </div>
+
+        <div class="btn-row" style="margin-top:1rem; justify-content:center;">
             <a href="/" class="btn btn-primary">🚀 Jogar de novo</a>
         </div>
     </div>
+
+    <script th:inline="javascript">
+        const lightningAddress = /*[[${lightningAddress}]]*/ 'tactualreason158@walletofsatoshi.com';
+        function copyLightningAddress() {
+            navigator.clipboard.writeText(lightningAddress);
+            alert('Endereço copiado! ⚡');
+        }
+    </script>
 </th:block>
 
 </body>
