@@ -1,6 +1,5 @@
 package com.bitcoingame.config
 
-import io.github.bucket4j.Bandwidth
 import io.github.bucket4j.Bucket
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -16,8 +15,9 @@ class RateLimitFilter : OncePerRequestFilter() {
     private val buckets = ConcurrentHashMap<String, Bucket>()
 
     private fun newBucket(): Bucket {
-        val limit = Bandwidth.classic(30, io.github.bucket4j.Refill.greedy(30, Duration.ofMinutes(1)))
-        return Bucket.builder().addLimit(limit).build()
+        return Bucket.builder()
+            .addLimit { limit -> limit.capacity(30).refillGreedy(30, Duration.ofMinutes(1)) }
+            .build()
     }
 
     override fun doFilterInternal(

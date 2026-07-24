@@ -4,6 +4,7 @@ import com.bitcoingame.exception.PlayerNotFoundException
 import com.bitcoingame.model.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 @Transactional
@@ -14,10 +15,10 @@ class GameService(private val playerRepository: PlayerRepository) {
         return playerRepository.save(player)
     }
 
-    fun getPlayer(id: Long): Player =
+    fun getPlayer(id: UUID): Player =
         playerRepository.findById(id).orElseThrow { PlayerNotFoundException(id) }
 
-    fun attemptBarter(playerId: Long, item1: String, item2: String): TradeResult {
+    fun attemptBarter(playerId: UUID, item1: String, item2: String): TradeResult {
         val player = getPlayer(playerId)
         player.barterAttempts++
         playerRepository.save(player)
@@ -42,7 +43,7 @@ class GameService(private val playerRepository: PlayerRepository) {
         )
     }
 
-    fun advancePhase(playerId: Long, toPhase: Int): Player {
+    fun advancePhase(playerId: UUID, toPhase: Int): Player {
         val player = getPlayer(playerId)
         if (toPhase == player.currentPhase + 1) {
             player.currentPhase = toPhase
@@ -54,7 +55,7 @@ class GameService(private val playerRepository: PlayerRepository) {
         return player
     }
 
-    fun kingMints(playerId: Long): MintResult {
+    fun kingMints(playerId: UUID): MintResult {
         val player = getPlayer(playerId)
         player.kingMints++
         playerRepository.save(player)
@@ -72,7 +73,7 @@ class GameService(private val playerRepository: PlayerRepository) {
         )
     }
 
-    fun mineBitcoin(playerId: Long): MiningResult {
+    fun mineBitcoin(playerId: UUID): MiningResult {
         val player = getPlayer(playerId)
 
         player.mineCount++
@@ -87,7 +88,7 @@ class GameService(private val playerRepository: PlayerRepository) {
         )
     }
 
-    fun sendBitcoin(playerId: Long): Player {
+    fun sendBitcoin(playerId: UUID): Player {
         val player = getPlayer(playerId)
         if (player.bitcoins > 0) {
             player.bitcoins--
@@ -97,7 +98,7 @@ class GameService(private val playerRepository: PlayerRepository) {
         return player
     }
 
-    fun resetGame(playerId: Long): Player {
+    fun resetGame(playerId: UUID): Player {
         val player = getPlayer(playerId)
         val reset = player.copy(
             currentPhase = 1,
@@ -112,7 +113,7 @@ class GameService(private val playerRepository: PlayerRepository) {
         return playerRepository.save(reset)
     }
 
-    fun bankFails(playerId: Long): BankResult {
+    fun bankFails(playerId: UUID): BankResult {
         val player = getPlayer(playerId)
         val goldLost = player.goldCoins
         player.goldCoins = 0

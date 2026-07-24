@@ -1,4 +1,6 @@
 package com.bitcoingame.exception
 
-class PlayerNotFoundException(playerId: Long) :
+import java.util.UUID
+
+class PlayerNotFoundException(playerId: UUID) :
     RuntimeException("Jogador com id $playerId não encontrado")

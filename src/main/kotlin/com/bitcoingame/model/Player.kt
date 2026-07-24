@@ -1,13 +1,13 @@
 package com.bitcoingame.model
 
 import jakarta.persistence.*
+import java.util.UUID
 
 @Entity
 @Table(name = "players")
 data class Player(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    val id: UUID = UUID.randomUUID(),
 
     val name: String,
 

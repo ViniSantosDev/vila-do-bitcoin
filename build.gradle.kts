@@ -26,7 +26,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("com.bucket4j:bucket4j-core:8.14.0")
+    implementation("com.bucket4j:bucket4j_jdk17-core:8.19.0")
     runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

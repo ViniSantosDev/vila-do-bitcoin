@@ -4,6 +4,7 @@ import com.bitcoingame.service.GameService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import java.util.UUID
 
 @Controller
 class GameController(private val gameService: GameService) {
@@ -21,7 +22,7 @@ class GameController(private val gameService: GameService) {
     // ── Tela principal do jogo ──────────────────────────────────────────────
 
     @GetMapping("/game/{id}")
-    fun game(@PathVariable id: Long, model: Model): String {
+    fun game(@PathVariable id: UUID, model: Model): String {
         val player = gameService.getPlayer(id)
         model.addAttribute("player", player)
         model.addAttribute("breadPrice", 1 + player.kingMints)
@@ -33,7 +34,7 @@ class GameController(private val gameService: GameService) {
 
     @PostMapping("/game/{id}/barter")
     fun barter(
-        @PathVariable id: Long,
+        @PathVariable id: UUID,
         @RequestParam item1: String,
         @RequestParam item2: String,
         model: Model
@@ -48,7 +49,7 @@ class GameController(private val gameService: GameService) {
     // ── Fase 2: Inflação ────────────────────────────────────────────────────
 
     @PostMapping("/game/{id}/mint")
-    fun mint(@PathVariable id: Long, model: Model): String {
+    fun mint(@PathVariable id: UUID, model: Model): String {
         val result = gameService.kingMints(id)
         val player = gameService.getPlayer(id)
         model.addAttribute("result", result)
@@ -60,7 +61,7 @@ class GameController(private val gameService: GameService) {
 
     @PostMapping("/game/{id}/advance/{phase}")
     fun advance(
-        @PathVariable id: Long,
+        @PathVariable id: UUID,
         @PathVariable phase: Int,
         model: Model
     ): String {
@@ -79,7 +80,7 @@ class GameController(private val gameService: GameService) {
     // ── Fase 3: Banco ───────────────────────────────────────────────────────
 
     @PostMapping("/game/{id}/bank")
-    fun bank(@PathVariable id: Long, model: Model): String {
+    fun bank(@PathVariable id: UUID, model: Model): String {
         val result = gameService.bankFails(id)
         val player = gameService.getPlayer(id)
         model.addAttribute("result", result)
@@ -90,7 +91,7 @@ class GameController(private val gameService: GameService) {
     // ── Fase 4: Bitcoin ─────────────────────────────────────────────────────
 
     @PostMapping("/game/{id}/mine")
-    fun mine(@PathVariable id: Long, model: Model): String {
+    fun mine(@PathVariable id: UUID, model: Model): String {
         val result = gameService.mineBitcoin(id)
         val player = gameService.getPlayer(id)
         model.addAttribute("result", result)
@@ -99,7 +100,7 @@ class GameController(private val gameService: GameService) {
     }
 
     @PostMapping("/game/{id}/send")
-    fun send(@PathVariable id: Long, model: Model): String {
+    fun send(@PathVariable id: UUID, model: Model): String {
         val player = gameService.sendBitcoin(id)
         model.addAttribute("player", player)
         return "fragments/phase4 :: send-result"
@@ -108,7 +109,7 @@ class GameController(private val gameService: GameService) {
     // ── Reiniciar ───────────────────────────────────────────────────────────
 
     @PostMapping("/game/{id}/reset")
-    fun reset(@PathVariable id: Long): String {
+    fun reset(@PathVariable id: UUID): String {
         gameService.resetGame(id)
         return "redirect:/game/$id"
     }
