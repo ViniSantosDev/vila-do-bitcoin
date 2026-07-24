@@ -45,6 +45,9 @@ class GameService(private val playerRepository: PlayerRepository) {
         val player = getPlayer(playerId)
         if (toPhase == player.currentPhase + 1) {
             player.currentPhase = toPhase
+            if (toPhase == 3) {
+                player.goldCoins = 10 // o banco quebrou, o jogador perdeu tudo
+            }
             playerRepository.save(player)
         }
         return player
@@ -71,13 +74,10 @@ class GameService(private val playerRepository: PlayerRepository) {
     fun mineBitcoin(playerId: Long): MiningResult {
         val player = getPlayer(playerId)
 
-        val progress = minOf(player.bitcoins * 0 + (20..40).random(), 100)
-
-        if (!player.miningComplete) {
-            player.miningComplete = true
-            player.bitcoins = 1
-            playerRepository.save(player)
-        }
+        player.mineCount++
+        player.bitcoins++
+        player.miningComplete = true
+        playerRepository.save(player)
 
         return MiningResult(
             progress = 100,
@@ -104,9 +104,25 @@ class GameService(private val playerRepository: PlayerRepository) {
             goldCoins = 10,
             kingMints = 0,
             bitcoins = 0,
+            mineCount = 0,
             miningComplete = false,
             gameComplete = false
         )
         return playerRepository.save(reset)
+    }
+
+    fun bankFails(playerId: Long): BankResult {
+        val player = getPlayer(playerId)
+        val goldLost = player.goldCoins
+        player.goldCoins = 0
+        playerRepository.save(player)
+
+        val message = "😭 O banco faliu e fechou as portas. Você perdeu tudo o que tinha guardado!"
+
+        return BankResult(
+            message = message,
+            goldLost = goldLost,
+            showNextButton = true
+        )
     }
 }

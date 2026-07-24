@@ -69,11 +69,22 @@ class GameController(private val gameService: GameService) {
         model.addAttribute("breadPrice", 1 + player.kingMints)
         model.addAttribute("totalGold", 100 + player.kingMints * 50)
         return when (phase) {
-            2 -> "fragments/phase2"
-            3 -> "fragments/phase3"
-            4 -> "fragments/phase4"
-            else -> "fragments/phase1"
+            2 -> "fragments/phase2 :: content"
+            3 -> "fragments/phase3 :: content"
+            4 -> "fragments/phase4 :: content"
+            else -> "fragments/phase1 :: content"
         }
+    }
+
+    // ── Fase 3: Banco ───────────────────────────────────────────────────────
+
+    @PostMapping("/game/{id}/bank")
+    fun bank(@PathVariable id: Long, model: Model): String {
+        val result = gameService.bankFails(id)
+        val player = gameService.getPlayer(id)
+        model.addAttribute("result", result)
+        model.addAttribute("player", player)
+        return "fragments/bank-result"
     }
 
     // ── Fase 4: Bitcoin ─────────────────────────────────────────────────────
@@ -84,7 +95,7 @@ class GameController(private val gameService: GameService) {
         val player = gameService.getPlayer(id)
         model.addAttribute("result", result)
         model.addAttribute("player", player)
-        return "fragments/phase4 :: mined"
+        return "fragments/phase4 :: content"
     }
 
     @PostMapping("/game/{id}/send")

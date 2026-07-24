@@ -37,11 +37,11 @@
         <div class="stat-pill">Pão custa: <strong th:text="${result.breadPrice} + ' moeda(s)'"></strong></div>
     </div>
 
-    <div th:if="${result and result.showNextButton}" class="alert alert-success" style="margin-top:.5rem">
+    <div th:if="${result?.showNextButton ?: false}" class="alert alert-success" style="margin-top:.5rem">
         💡 Entendeu o problema? Quando alguém pode criar dinheiro infinito, o seu dinheiro perde o valor! Isso se chama <strong>inflação</strong>.
     </div>
 
-    <div th:if="${result and result.showNextButton}" class="btn-row" style="margin-top:.5rem">
+    <div th:if="${result?.showNextButton ?: false}" class="btn-row" style="margin-top:.5rem">
         <button class="btn btn-primary"
                 th:attr="hx-post=@{/game/{id}/advance/3(id=${player.id})}"
                 hx-target="#game-area"

@@ -23,5 +23,7 @@ data class Player(
 
     var miningComplete: Boolean = false,
 
-    var gameComplete: Boolean = false
+    var gameComplete: Boolean = false,
+
+    var mineCount : Int = 0
 )

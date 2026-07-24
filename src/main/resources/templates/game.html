@@ -26,13 +26,12 @@
     <!-- Área do jogo (trocada pelo HTMX) -->
     <div id="game-area">
         <div th:switch="${player.currentPhase}">
-            <div th:case="1"  th:replace="~{fragments/phase1 :: content(${player})}"></div>
-            <div th:case="2"  th:replace="~{fragments/phase2 :: content(${player}, ${breadPrice}, ${totalGold})}"></div>
-            <div th:case="3"  th:replace="~{fragments/phase3 :: content(${player})}"></div>
-            <div th:case="4"  th:replace="~{fragments/phase4 :: content(${player})}"></div>
+            <div th:case="1"><div th:replace="~{fragments/phase1 :: content(${player})}"></div></div>
+            <div th:case="2"><div th:replace="~{fragments/phase2 :: content(${player}, ${breadPrice}, ${totalGold})}"></div></div>
+            <div th:case="3"><div th:replace="~{fragments/phase3 :: content(${player})}"></div></div>
+            <div th:case="4"><div th:replace="~{fragments/phase4 :: content(${player})}"></div></div>
         </div>
     </div>
-
     <!-- Reiniciar -->
     <div style="text-align:center; margin-top:2rem;">
         <form th:action="@{/game/{id}/reset(id=${player.id})}" method="post">
