@@ -15,13 +15,3 @@ Jogo educativo web para ensinar Bitcoin para crianças, construído com Spring B
 
 
 Acesse: https://vila-do-bitcoin.onrender.com/
-
-
-## Próximos passos sugeridos
-
-- [ ] Adicionar sistema de pontuação e ranking
-- [ ] Criar mais fases (carteira digital, chaves públicas/privadas)
-- [ ] Adicionar sons e animações via CSS
-- [ ] Internacionalizar (inglês, espanhol)
-- [ ] Salvar progresso com sessão ou login simples
-- [ ] Migrar H2 para PostgreSQL para persistência real
