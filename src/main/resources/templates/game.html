@@ -13,14 +13,17 @@
 
     <div class="game-header">
         <div>🏘️ <strong>Vila do Bitcoin</strong></div>
-        <div class="game-header h2">Olá, <span th:text=" ${player.name}"> Jogador</span>! 👋</div>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div class="game-header h2">Olá, <span th:text="${player.name}">Jogador</span>! 👋</div>
+            <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+        </div>
     </div>
 
     <!-- Área do jogo-->
     <div id="game-area">
         <div th:switch="${player.currentPhase}">
             <div th:case="1"><div th:replace="~{fragments/phase1 :: content(${player})}"></div></div>
-            <div th:case="2"><div th:replace="~{fragments/phase2 :: content(${player}, ${breadPrice}, ${totalGold})}"></div></div>
+            <div th:case="2"><div th:replace="~{fragments/phase2 :: content(${player}, ${breadPrice}, ${totalGold}, ${iptu}, ${ipva})}"></div></div>
             <div th:case="3"><div th:replace="~{fragments/phase3 :: content(${player})}"></div></div>
             <div th:case="4"><div th:replace="~{fragments/phase4 :: content(${player})}"></div></div>
         </div>
@@ -36,4 +39,23 @@
 
 </div>
 </body>
+<script>
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const btn = document.getElementById('theme-btn');
+        if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        applyTheme(next);
+    }
+
+    (function () {
+        const saved = localStorage.getItem('theme') || 'light';
+        applyTheme(saved);
+    })();
+</script>
 </html>

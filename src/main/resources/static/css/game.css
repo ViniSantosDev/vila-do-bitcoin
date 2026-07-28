@@ -1,10 +1,35 @@
+:root {
+    --bg-color: #f5f3ef;
+    --text-color: #1a1a18;
+    --card-bg: #ffffff;
+    --card-border: #e0ddd5;
+    --text-muted: #6b6963;
+    --text-body: #4a4845;
+    --input-bg: #faf9f7;
+    --stat-pill-bg: #f5f3ef;
+    --dot-bg: #e0ddd5;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a1a18;
+    --text-color: #f0efe9;
+    --card-bg: #26241f;
+    --card-border: #3d3b35;
+    --text-muted: #a8a49c;
+    --text-body: #d0cdc5;
+    --input-bg: #201f1b;
+    --stat-pill-bg: #201f1b;
+    --dot-bg: #3d3b35;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: system-ui, -apple-system, sans-serif;
-    background: #f5f3ef;
-    color: #1a1a18;
+    background: var(--bg-color);
+    color: var(--text-color);
     min-height: 100vh;
+    transition: background .2s, color .2s;
 }
 
 .container {
@@ -15,26 +40,27 @@ body {
 
 /* ── Tela inicial ─────────────────────────────────────────────── */
 .home-card {
-    background: #fff;
+    background: var(--card-bg);
     border-radius: 16px;
-    border: 0.5px solid #e0ddd5;
+    border: 0.5px solid var(--card-border);
     padding: 2.5rem 2rem;
     text-align: center;
     margin-top: 4rem;
 }
 
 .home-card h1 { font-size: 2rem; font-weight: 600; margin-bottom: .5rem; }
-.home-card p  { color: #6b6963; margin-bottom: 1.5rem; font-size: 1.05rem; }
+.home-card p  { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
 
 .name-input {
     width: 100%;
     padding: 12px 16px;
     font-size: 1rem;
-    border: 0.5px solid #d0cdc5;
+    border: 0.5px solid var(--card-border);
     border-radius: 10px;
     outline: none;
     margin-bottom: 1rem;
-    background: #faf9f7;
+    background: var(--input-bg);
+    color: var(--text-color);
 }
 .name-input:focus { border-color: #1D9E75; }
 
@@ -45,15 +71,15 @@ body {
     gap: 6px;
     padding: 10px 20px;
     border-radius: 10px;
-    border: 0.5px solid #d0cdc5;
-    background: #fff;
-    color: #1a1a18;
+    border: 0.5px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-color);
     font-size: 14px;
     cursor: pointer;
     transition: background .15s, transform .1s;
     text-decoration: none;
 }
-.btn:hover  { background: #f5f3ef; }
+.btn:hover  { background: var(--bg-color); }
 .btn:active { transform: scale(0.97); }
 
 .btn-primary {
@@ -74,6 +100,17 @@ body {
 
 .btn-full { width: 100%; justify-content: center; padding: 12px; font-size: 15px; }
 
+.theme-toggle {
+    background: none;
+    border: 0.5px solid var(--card-border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-color);
+}
+.theme-toggle:hover { background: var(--stat-pill-bg); }
+
 /* ── Progress bar de fases ────────────────────────────────────── */
 .phase-bar {
     display: flex;
@@ -84,7 +121,7 @@ body {
     flex: 1;
     height: 5px;
     border-radius: 3px;
-    background: #e0ddd5;
+    background: var(--dot-bg);
     transition: background .4s;
 }
 .phase-dot.active { background: #1D9E75; }
@@ -92,15 +129,15 @@ body {
 
 /* ── Cards ────────────────────────────────────────────────────── */
 .card {
-    background: #fff;
+    background: var(--card-bg);
     border-radius: 14px;
-    border: 0.5px solid #e0ddd5;
+    border: 0.5px solid var(--card-border);
     padding: 1.25rem 1.5rem;
     margin-bottom: 1rem;
 }
 
 .phase-title  { font-size: 1.25rem; font-weight: 600; margin-bottom: .5rem; }
-.phase-story  { color: #4a4845; line-height: 1.65; margin-bottom: 1rem; font-size: 15px; }
+.phase-story  { color: var(--text-body); line-height: 1.65; margin-bottom: 1rem; font-size: 15px; }
 
 /* ── Items de escambo ─────────────────────────────────────────── */
 .items-grid {
@@ -111,8 +148,8 @@ body {
 }
 
 .item-btn {
-    background: #faf9f7;
-    border: 0.5px solid #d0cdc5;
+    background: var(--input-bg);
+    border: 0.5px solid var(--card-border);
     border-radius: 10px;
     padding: 10px 16px;
     cursor: pointer;
@@ -123,7 +160,7 @@ body {
     font-size: 26px;
     transition: transform .15s, border-color .15s;
 }
-.item-btn span { font-size: 12px; color: #6b6963; font-weight: 500; }
+.item-btn span { font-size: 12px; color: var(--text-muted); font-weight: 500; }
 .item-btn:hover { transform: scale(1.08); border-color: #1D9E75; }
 
 /* ── Alertas ──────────────────────────────────────────────────── */
@@ -139,6 +176,11 @@ body {
 .alert-info    { background: #E6F1FB; border: 0.5px solid #85B7EB; color: #0C447C; }
 .alert-warn    { background: #FAEEDA; border: 0.5px solid #EF9F27; color: #633806; }
 
+[data-theme="dark"] .alert-danger  { background: #3a231d; border-color: #7a4230; color: #f0b9a3; }
+[data-theme="dark"] .alert-success { background: #16332a; border-color: #2d6b56; color: #9fe1cb; }
+[data-theme="dark"] .alert-info    { background: #17293a; border-color: #2d5a8a; color: #a8cdf0; }
+[data-theme="dark"] .alert-warn    { background: #3a2e16; border-color: #8a611f; color: #f0cd8f; }
+
 /* ── Wallet stats ─────────────────────────────────────────────── */
 .stats-row {
     display: flex;
@@ -147,18 +189,18 @@ body {
     margin-bottom: 1rem;
 }
 .stat-pill {
-    background: #f5f3ef;
-    border: 0.5px solid #e0ddd5;
+    background: var(--stat-pill-bg);
+    border: 0.5px solid var(--card-border);
     border-radius: 8px;
     padding: 6px 14px;
     font-size: 13px;
-    color: #4a4845;
+    color: var(--text-body);
 }
-.stat-pill strong { color: #1a1a18; }
+.stat-pill strong { color: var(--text-color); }
 
 /* ── Barra de mineração ───────────────────────────────────────── */
 .mine-track {
-    background: #e0ddd5;
+    background: var(--dot-bg);
     border-radius: 4px;
     height: 10px;
     overflow: hidden;
@@ -173,8 +215,8 @@ body {
 
 /* ── Ledger ───────────────────────────────────────────────────── */
 .ledger {
-    background: #faf9f7;
-    border: 0.5px solid #e0ddd5;
+    background: var(--input-bg);
+    border: 0.5px solid var(--card-border);
     border-radius: 10px;
     padding: 10px 14px;
     font-size: 13px;
@@ -184,8 +226,8 @@ body {
 }
 .ledger-row {
     padding: 3px 0;
-    border-bottom: 0.5px solid #e0ddd5;
-    color: #6b6963;
+    border-bottom: 0.5px solid var(--card-border);
+    color: var(--text-muted);
 }
 .ledger-row:last-child { border: none; }
 
@@ -213,10 +255,21 @@ body {
 /* ── HTMX loading indicator ───────────────────────────────────── */
 .htmx-indicator {
     display: none;
-    color: #6b6963;
+    color: var(--text-muted);
     font-size: 13px;
 }
 .htmx-request .htmx-indicator { display: inline; }
+
+.stat-pill-success {
+    background: #E1F5EE;
+    border: 0.5px solid #5DCAA5;
+    color: #085041;
+}
+[data-theme="dark"] .stat-pill-success {
+    background: #16332a;
+    border-color: #2d6b56;
+    color: #9fe1cb;
+}
 
 /* ── Emoji grande ─────────────────────────────────────────────── */
 .big-emoji {
@@ -232,4 +285,4 @@ body {
     justify-content: space-between;
     margin-bottom: 1.25rem;
 }
-.game-header h2 { font-size: 1rem; color: #6b6963; font-weight: 400; }
+.game-header h2 { font-size: 1rem; color: var(--text-muted); font-weight: 400; }

@@ -9,6 +9,9 @@
 </head>
 <body>
 <div class="container">
+    <div style="text-align:right; margin-bottom:.5rem;">
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+    </div>
     <div class="home-card">
         <div style="font-size:3rem; margin-bottom:1rem;">🏘️₿</div>
         <h1>Vila do Bitcoin</h1>
@@ -30,4 +33,23 @@
     </div>
 </div>
 </body>
+<script>
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        const btn = document.getElementById('theme-btn');
+        if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        applyTheme(next);
+    }
+
+    (function () {
+        const saved = localStorage.getItem('theme') || 'light';
+        applyTheme(saved);
+    })();
+</script>
 </html>

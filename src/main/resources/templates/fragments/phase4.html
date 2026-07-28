@@ -20,9 +20,9 @@
         </p>
 
         <div class="stats-row">
-            <div class="stat-pill">Seu Bitcoin: <strong th:text="${player.bitcoins} + ' ₿'" id="btc-count">0 ₿</strong></div>
-            <div class="stat-pill">Limite total: <strong>21.000.000 ₿</strong></div>
-            <div class="stat-pill" style="color:#085041; background:#E1F5EE; border-color:#5DCAA5">
+            <div class="stat-pill stat-pill-success"> Seu Bitcoin: <strong th:text="${player.bitcoins} + ' ₿'" id="btc-count">0 ₿</strong></div>
+            <div class="stat-pill stat-pill-success"> Limite total: <strong>21.000.000 ₿</strong></div>
+            <div class="stat-pill stat-pill-success">
                 Banco necessário: <strong>Nenhum! ✓</strong>
             </div>
         </div>
@@ -128,15 +128,15 @@
             </ul>
         </div>
 
-        <div style="text-align:center; margin-top:1.5rem; padding-top:1.5rem; border-top:0.5px solid #e0ddd5;">
-            <p style="font-size:14px; color:#6b6963; margin-bottom:.75rem;">
+        <div style="text-align:center; margin-top:1.5rem; padding-top:1.5rem; border-top:0.5px solid var(--card-border);">
+            <p style="font-size:14px; color:var(--text-muted); margin-bottom:.75rem;">
                 ⚡ Gostou do jogo? Manda uns sats pela Lightning!
             </p>
 
             <img src="/qrcode/lightning"
                  alt="QR Code Lightning"
                  style="border-radius:8px; margin-bottom:.5rem;"/>
-            <div style="font-size:13px; color:#4a4845; margin-bottom:.5rem;" th:text="${lightningAddress}">
+            <div style="font-size:13px; color:var(--text-body); margin-bottom:.5rem;" th:text="${lightningAddress}">
                 tactualreason158@walletofsatoshi.com
             </div>
             <button class="btn" style="font-size:12px;" onclick="copyLightningAddress()">
@@ -147,7 +147,6 @@
         <div class="btn-row" style="margin-top:1rem; justify-content:center;">
             <a href="/" class="btn btn-primary">🚀 Jogar de novo</a>
         </div>
-    </div>
 
     <script th:inline="javascript">
         const lightningAddress = /*[[${lightningAddress}]]*/ 'tactualreason158@walletofsatoshi.com';
